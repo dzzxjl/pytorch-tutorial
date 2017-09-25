@@ -33,6 +33,7 @@ class LinearRegression(nn.Module):
 model = LinearRegression(input_size, output_size)
 
 # Loss and Optimizer
+# 损失函数
 criterion = nn.MSELoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)  
 
