@@ -50,6 +50,9 @@ class Net(nn.Module):
 net = Net()
 print(net)
 
+for param in net.parameters():
+    print('查看参数')
+    print(type(param.data), param.size())
 
 # 第一个1是batch dimension
 input = Variable(torch.randn(1, 1, 32, 32))
