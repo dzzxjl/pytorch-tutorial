@@ -1,7 +1,45 @@
 import torch
-from torch.autograd import Variable
+import torchvision
+import torchvision.transforms as transforms
+transform = transforms.Compose(
+    [transforms.ToTensor(),
+     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+
+# trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
+#                                         download=True, transform=transform)
+
+trainset = torchvision.datasets.CIFAR10(root='/Users/dzzxjl/data/cifar-10', train=True, transform=transform)
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=4,
+                                          shuffle=True, num_workers=2)
+
+# testset = torchvision.datasets.CIFAR10(root='./data', train=False,
+#                                        download=True, transform=transform)
+testset = torchvision.datasets.CIFAR10(root='/Users/dzzxjl/data/cifar-10', train=False, transform=transform)
+testloader = torch.utils.data.DataLoader(testset, batch_size=4,
+                                         shuffle=False, num_workers=2)
+# 10类
+classes = ('plane', 'car', 'bird', 'cat',
+           'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
+########################################################################
+# Let us show some of the training images, for fun.
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# functions to show an image
 
 
+def imshow(img):
+    img = img / 2 + 0.5     # unnormalize
+    npimg = img.numpy()
+    plt.imshow(np.transpose(npimg, (1, 2, 0)))
+    plt.show()
 
-a = Variable(torch.randn(2, 1, 3, 3))
-print(a)
+
+# get some random training images
+dataiter = iter(trainloader)
+images, labels = dataiter.next()
+
+# show images
+imshow(torchvision.utils.make_grid(images))
